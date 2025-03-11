@@ -12,48 +12,104 @@ public class Factura {
         cobrada = false;
     }
 
-    public String getDNI() {
-        return "";
-        // Completar;
+    public String getDni() {
+        //Completar
+        return dni;
     }
 
     public String getFecha() {
-        return "";
-
-        // Completar;
+        //Completar
+        return fecha;
     }
 
     public boolean estaCobrada() {
         // Completar;
-        return false;
+        return this.cobrada;
     }
 
     public void cobrada() {
-
         // Completar;
+        this.cobrada = true;
     }
 
     public void anyadirProducto(Producto producto) {
+        //completar
+        Iterador iterador = this.listaProductos.getIterador();
+        boolean encontrado = false;
 
-        // Completar
+        while (iterador.hasNext() && !encontrado) {
+            Producto p = iterador.next();
+            if (p.equals(producto)) {
+                p.setUnidades(p.getUnidades() + producto.getUnidades());
+                encontrado = true;
+            }
+        }
+
+        if (!encontrado) {
+            this.listaProductos.insertar(producto);
+        }
     }
+
 
     public void mostrar() {
         // Completar
+
+        System.out.println("\nFACTURA DE: " + this.dni + ". " + "Fecha:" + this.fecha);
+        for (int i = 0; i < this.listaProductos.getNumElementos(); i++) {
+            this.listaProductos.getElemento(i).mostrar();
+        }
+
+        System.out.println("IMPORTE TOTAL: " + importeTotal() + " €");
+
     }
 
     public float importeTotal() {
         // Completar
-        return 0.0f; // Línea puesta para evitar error. Eliminarla al codificar el metodo
+        Iterador iterador = this.listaProductos.getIterador();
+        float importeTotal = 0.0f;
+
+        while(iterador.hasNext()){
+            Producto p = iterador.next();
+            importeTotal += (p.getUnidades() * p.getPrecio());
+        }
+        return importeTotal; // Línea puesta para evitar error. Eliminarla al codificar el metodo
     }
 
     public int eliminarProducto(Producto producto) {
         // Completar
-        return 0; // Línea puesta para evitar error. Eliminarla al codificar el metodo
+        Iterador iterador = this.listaProductos.getIterador();
+        boolean encontrado = false;
+        int numEliminado = 0;
+
+        while(iterador.hasNext() && !encontrado){
+            Producto p = iterador.next();
+            if(p.equals(producto)){
+                if(p.getUnidades() > producto.getUnidades()){
+                    p.setUnidades(p.getUnidades() - producto.getUnidades());
+                    numEliminado = producto.getUnidades();
+                }
+                else{
+                    this.listaProductos.borrar(p);
+                    numEliminado = p.getUnidades();
+                }
+                encontrado = true;
+            }
+        }
+        return numEliminado; // Línea puesta para evitar error. Eliminarla al codificar el metodo
     }
 
     public Lista mayoresPrecios(float precio) {
         // Completar
-        return null; // Línea puesta para evitar error. Eliminarla al codificar el metodo
+        Lista listaMayoresPrecios = new Lista();
+        Iterador iterador = this.listaProductos.getIterador();
+
+        while(iterador.hasNext()){
+            Producto p = iterador.next();
+            if(p.getPrecio() > precio){
+                listaMayoresPrecios.insertar(p);
+            }
+        }
+        return listaMayoresPrecios; // Línea puesta para evitar error. Eliminarla al codificar el metodo
     }
+
 }
