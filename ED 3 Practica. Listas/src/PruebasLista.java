@@ -1,3 +1,7 @@
+import java.util.LinkedList;
+
+//Mario Vicente Navarré
+
 public class PruebasLista {
     public static void main(String[] args) {
         // Introducir aquí las pruebas pedidas en la práctica
@@ -55,6 +59,28 @@ public class PruebasLista {
         listaMayoresPrecios.mostrar();
 
 
+        /* Clase FacturaBib */
+
+        FacturaBib facturaBib = new FacturaBib("88888888A", "08/08/2008");
+        Producto productoBib1 = new Producto("Armario", 385, 5);
+        Producto productoBib2 = new Producto("Cama", 255, 3);
+        Producto productoBib3 = new Producto("Cama", 255, 2);
+        Producto productoBib4 = new Producto("Armario", 385, 1);
+
+        facturaBib.anyadirProducto(productoBib1);
+        facturaBib.anyadirProducto(productoBib2);
+        facturaBib.anyadirProducto(productoBib3);
+
+        facturaBib.eliminarProducto(productoBib4);
+
+        facturaBib.mostrar();
+
+        float precioBib = 250;
+        LinkedList<Producto> listaMayoresPreciosBib = facturaBib.mayoresPrecios(precioBib);
+        System.out.println("\nSe han obtenido "+ listaMayoresPreciosBib.size() + " productos con precio " +
+                "mayor a " + precioBib + " € por unidad");
+
+        facturaBib.mostrar();
 
     }
 }
